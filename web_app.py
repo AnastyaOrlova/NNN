@@ -73,15 +73,15 @@ def list_note():
     note_list = m_id
     )
 
-#@api_router.get("/info_note", response_model = NoteInfoResponse)
-#def info_note(id: int):
+@api_router.get("/info_note", response_model = NoteInfoResponse)
+def info_note(id: int):
 
-#    my_file = open('notes/' + str(id) + ".txt", "r")
+    my_file = open('notes/' + str(id) + ".txt", "r")
 
-#    return NoteInfoResponse(
-#    created_at =
-#    updated_at =
-#    )
+    return NoteInfoResponse(
+    created_at =
+    updated_at =
+    )
 
 
 
