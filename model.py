@@ -21,4 +21,3 @@ class NoteDeleteResponse(BaseModel):
 
 class NoteUpdateResponse(BaseModel):
     id: int
-    text: str

@@ -24,8 +24,6 @@ def create_note(text: str, token: str):
 
     my_file = open('notes/' + str(id) + ".txt", "w+")
     my_file.write(text)
-#    my_file.created_at = datetime.datetime.now()
-    my_file.close()
 
     return NoteCreateResponse(
     id = int(id),
@@ -51,14 +49,12 @@ def delete_note(id: int):
 
 @api_router.put("/update_note", response_model = NoteUpdateResponse)
 def update_note(id: int, text: str):
+    global time_update
     my_file = open('notes/' + str(id) + ".txt", "w+")
     my_file.write(text)
-#    my_file.created_at = datetime.datetime.now()
-    my_file.close()
 
     return NoteUpdateResponse(
     id = int(id),
-    text = " "
     )
 
 @api_router.get("/list_note", response_model = NoteListResponse)
@@ -75,12 +71,13 @@ def list_note():
 
 @api_router.get("/info_note", response_model = NoteInfoResponse)
 def info_note(id: int):
-
-    my_file = open('notes/' + str(id) + ".txt", "r")
+    path = r"notes/" + str(id) + ".txt"
+    time_c = datetime.datetime.fromtimestamp(os.path.getctime(path))
+    time_u = datetime.datetime.fromtimestamp(os.path.getmtime(path))
 
     return NoteInfoResponse(
-    created_at =
-    updated_at =
+    created_at = time_c,
+    updated_at = time_u
     )
 
 
