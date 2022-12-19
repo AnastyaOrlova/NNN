@@ -46,12 +46,12 @@ def create_note(text: str, token: str):
 @api_router.get("/read_note", response_model = NoteTextResponse)
 def read_note(id: str, token: str):
     file1 = open("tokens.txt", "r")
-    id = 7
     lines = file1.readlines()
     for line in lines:
-        a = line.split(".")
+        a = line.split(". ")
+        b = a[1].split("\n")
         if a[0] == str(id):
-            t = a[1]
+            t = b[0]
 
     if token == t:
         my_file = open('notes/' + str(id) + ".txt", "r")
@@ -69,10 +69,14 @@ def read_note(id: str, token: str):
 
 @api_router.delete("/delete_note", response_model = NoteDeleteResponse)
 def delete_note(id: int, token: str):
-    n = int(id)
-    t = linecache.getline('tokens.txt', n)
-    t = t.split()
-    t = t[1]
+    file1 = open("tokens.txt", "r")
+    lines = file1.readlines()
+    for line in lines:
+        a = line.split(". ")
+        b = a[1].split("\n")
+        if a[0] == str(id):
+            t = b[0]
+
     if token == t:
         os.remove('notes/' + str(id) + ".txt")
 
@@ -86,10 +90,14 @@ def delete_note(id: int, token: str):
 
 @api_router.put("/update_note", response_model = NoteUpdateResponse)
 def update_note(id: int, text: str, token: str):
-    n = int(id)
-    t = linecache.getline('tokens.txt', n)
-    t = t.split()
-    t = t[1]
+    file1 = open("tokens.txt", "r")
+    lines = file1.readlines()
+    for line in lines:
+        a = line.split(". ")
+        b = a[1].split("\n")
+        if a[0] == str(id):
+            t = b[0]
+
     if token == t:
         my_file = open('notes/' + str(id) + ".txt", "w+")
         my_file.write(text)
@@ -104,8 +112,7 @@ def update_note(id: int, text: str, token: str):
 
 @api_router.get("/list_note", response_model = NoteListResponse)
 def list_note(token: str):
-    n = int(id)
-    t = linecache.getline('tokens.txt', n)
+    t = linecache.getline('tokens.txt', 1)
     t = t.split()
     t = t[1]
     if token == t:
@@ -125,10 +132,14 @@ def list_note(token: str):
 
 @api_router.get("/info_note", response_model = NoteInfoResponse)
 def info_note(id: int, token: str):
-    n = int(id)
-    t = linecache.getline('tokens.txt', n)
-    t = t.split()
-    t = t[1]
+    file1 = open("tokens.txt", "r")
+    lines = file1.readlines()
+    for line in lines:
+        a = line.split(". ")
+        b = a[1].split("\n")
+        if a[0] == str(id):
+            t = b[0]
+
     if token == t:
         path = r"notes/" + str(id) + ".txt"
         time_c = datetime.datetime.fromtimestamp(os.path.getctime(path))
@@ -143,7 +154,6 @@ def info_note(id: int, token: str):
         created_at = 0,
         updated_at = 0
         )
-
 
 
 
